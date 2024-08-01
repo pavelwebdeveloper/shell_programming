@@ -1,0 +1,81 @@
+#!/usr/bin/bash
+
+
+userChoice(){                                           # a user-defined function to convert user integer input into a more informative message
+
+        if [[ $REPLY == 1 ]]; then
+                echo "1. Rock"
+        elif [[ $REPLY == 2 ]]; then
+                echo "2. Paper"
+        elif [[ $REPLY == 3 ]]; then
+                echo "3. Scissors"
+        fi
+}
+
+computerChoice(){                                       # a user-defined function to convert randomly generated integers into a more informative message
+
+        if [[ $computer == 1 ]]; then
+                echo "1. Rock"
+        elif [[ $computer == 2 ]]; then
+                echo "2. Paper"
+        elif [[ $computer == 3 ]]; then
+                echo "3. Scissors"
+        fi
+}
+
+
+        while true; do                                  # the beginning of a never ending loop
+
+                echo "1. Rock"                          # echoing the options for a user to choose from
+                echo "2. Paper"
+                echo "3. Scissors"
+                echo "4. Done"
+
+                read -p "Your choice [1-4]? "           # getting input from a user
+
+                computer=$(( ( RANDOM % 3 ) + 1 ))      # generating a random choice for computer
+
+                clear                                   # clear screen for a new round
+
+                if [[ "$REPLY" =~ ^[1-4]$ ]]; then      # testing if input is valid
+
+                        if [[ "$REPLY" == "$computer" ]]; then                  # testing if user choice equals computer choice
+
+                                echo "You chose $(userChoice)"                  # echoing result with the call of user-defined functions
+                                echo "Computer chose $(computerChoice)"
+                                echo "You tied. Try again."
+                                echo ""                                         # echoing an empty line for a better output
+
+                        # testing the possibilities of winning options for a user
+
+                        elif [[ ( "$REPLY" == 1 && "$computer" == 3 ) || ( "$REPLY" == 3 && "$computer" == 2 ) || ( "$REPLY" == 2 && "$computer" == 1 ) ]]; then
+
+                                echo "You chose $(userChoice)"                  # echoing result with the call of user-defined functions
+                                echo "Computer chose $(computerChoice)"
+                                echo "You won."
+                                echo ""                                         # echoing an empty line for a better output
+
+                        # testing the possibilities of losing options for a user
+
+                        elif [[ ( "$REPLY" == 1 && "$computer" == 2 ) || ( "$REPLY" == 2 && "$computer" == 3 ) || ( "$REPLY" == 3 && "$computer" == 1 ) ]]; then
+
+                                echo "You chose $(userChoice)"                  # echoing result with the call of user-defined functions
+                                echo "Computer chose $(computerChoice)"
+                                echo "You lost."
+                                echo ""                                         # echoing an empty line for a better output
+
+                        elif [[ "$REPLY" == 4 ]]; then                          # testing if user chose the option to end the game
+
+                                break                                           # breaking out of the never ending loop
+
+                        fi
+                else
+
+                        echo "Wrong input. Choice must be an integer in the range of [1-4]. Please, try again."         # informing a user about wrong input
+
+                        echo ""                                                 # echoing an empty line for a better output
+
+                fi
+        done
+
+echo "Bye" 
